@@ -1,6 +1,6 @@
 # electronQC
 
-This is a minimal Electron application whose intention is to replace GeckoFX in QuantConnect.Lean in order to graph backtest results in a desktop environment.
+This is a minimal Electron application that can replace GeckoFX in QuantConnect.Lean in order to graph backtest results in a desktop environment.
 
 ## To Use
 
