@@ -33,17 +33,16 @@ Be sure you have your user id and api access token configured.
 
 Comment out the following [lines in Program.cs QuantConnect.Lean.Launcher](https://github.com/QuantConnect/Lean/blob/master/Launcher/Program.cs):
 
-`
-            if (environment.EndsWith("-desktop"))
-            {
-                var info = new ProcessStartInfo
-                {
-                    UseShellExecute = false,
-                    FileName = Config.Get("desktop-exe"),
-                    Arguments = Config.Get("desktop-http-port")
-                };
-                Process.Start(info);
-            }
-`
+``` csharp
+    if (environment.EndsWith("-desktop"))            {
+        var info = new ProcessStartInfo
+        {
+            UseShellExecute = false,
+            FileName = Config.Get("desktop-exe"),
+            Arguments = Config.Get("desktop-http-port")
+        };
+        Process.Start(info);
+    }
+```
 
 Learn more about QuantConnect go to [QuantConnect.com](http://www.quantConnect.com).
