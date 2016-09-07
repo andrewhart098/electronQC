@@ -1,38 +1,49 @@
-# electron-quick-start
+# electronQC
 
-**Clone and run for a quick way to see an Electron in action.**
-
-This is a minimal Electron application based on the [Quick Start Guide](http://electron.atom.io/docs/latest/tutorial/quick-start) within the Electron documentation.
-
-**Use this app along with the [Electron API Demos](http://electron.atom.io/#get-started) app for API code examples to help you get started.**
-
-A basic Electron application needs just these files:
-
-- `package.json` - Points to the app's main file and lists its details and dependencies.
-- `main.js` - Starts the app and creates a browser window to render HTML. This is the app's **main process**.
-- `index.html` - A web page to render. This is the app's **renderer process**.
-
-You can learn more about each of these components within the [Quick Start Guide](http://electron.atom.io/docs/latest/tutorial/quick-start).
+This is a minimal Electron application whose intention is to replace GeckoFX in QuantConnect.Lean in order to graph backtest results in a desktop environment.
 
 ## To Use
 
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+To clone and run this repository you'll need the following installed on your computer
+   - [Git](https://git-scm.com)
+   - [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com))
+   - Visual Studio 2015 with Visual C++ and associated tools installed
+
+From your command line:
 
 ```bash
 # Clone this repository
-git clone https://github.com/electron/electron-quick-start
+git clone https://github.com/andrewhart098/electronQC.git
 # Go into the repository
-cd electron-quick-start
+cd electronQC
 # Install dependencies and run the app
-npm install && npm start
+npm install 
+
+# rerun electron-rebuild
+./node_modules/.bin/electron-rebuild
+# Or if you are in Windows
+.\node_modules\.bin\electron-rebuild.cmd
+
+# Now start the electron app with 
+npm start
 ```
 
-Learn more about Electron and its API in the [documentation](http://electron.atom.io/docs/latest).
+Run the [QuantConnect.Lean](https://github.com/QuantConnect/Lean) engine in visual studio configured to run in a desktop environment.
+Be sure you have your user id and api access token configured.
 
-## Other Example Apps
+Comment out the following [lines in Program.cs QuantConnect.Lean.Launcher](https://github.com/QuantConnect/Lean/blob/master/Launcher/Program.cs):
 
-For more example apps, see the
-[list of boilerplates](http://electron.atom.io/community/#boilerplates)
-created by the awesome electron community.
+`
+            if (environment.EndsWith("-desktop"))
+            {
+                var info = new ProcessStartInfo
+                {
+                    UseShellExecute = false,
+                    FileName = Config.Get("desktop-exe"),
+                    Arguments = Config.Get("desktop-http-port")
+                };
+                Process.Start(info);
+            }
+`
 
-#### License [CC0 (Public Domain)](LICENSE.md)
+Learn more about QuantConnect go to [QuantConnect.com](http://www.quantConnect.com).
