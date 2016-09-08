@@ -1,4 +1,8 @@
 const electron = require('electron')
+var zmq = require('zmq')
+  , sock = zmq.socket('pull')
+  , moment = require('moment');
+
 // Module to control application life.
 const app = electron.app
 // Module to create native browser window.
@@ -27,10 +31,49 @@ function createWindow () {
   })
 }
 
+function startServer() {
+  var port = "1234"
+  var DateFormat = "yyyyMMdd HH:mm:ss";
+  let job
+  let contents = mainWindow.webContents
+  console.log(contents)
+
+  sock.connect("tcp://localhost:" + port)
+
+  // Should log in the terminal
+  console.log('Worker connected to port ' + port)
+
+  sock.on('message', function(msg){
+    try {
+      // deserialize
+      let message = JSON.parse(msg)
+      console.log(message)
+
+      if (message.eType == "Debug" || message.eType == "Log" || message.eType == "Error") {
+        mainWindow.webContents.send('log', message)
+      } 
+
+      if (message.eType == "BacktestNode") {
+        mainWindow.webContents.send('backtestNode', message)
+      } 
+
+      if (message.eType == "BacktestResult") {
+        mainWindow.webContents.send('backtestResult', message)
+      }
+
+    } catch (err) {
+      console.log(err.message);
+    }
+  });
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', function() {
+  createWindow()
+  startServer()
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
