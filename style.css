@@ -1,3 +1,20 @@
 ::-webkit-scrollbar { 
     display: none; 
 }
+
+body {
+    padding: 3px;
+}
+
+#console {
+    display: block;
+    height:18vh;
+    width: 99%;
+    font-size: 15px;
+    background-color: #222;
+    color: white;
+    line-height: 1.5;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding: 10px;
+}

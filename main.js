@@ -20,7 +20,7 @@ function createWindow () {
   mainWindow.loadURL(`file://${__dirname}/index.html`)
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -33,21 +33,13 @@ function createWindow () {
 
 function startServer() {
   var port = "1234"
-  var DateFormat = "yyyyMMdd HH:mm:ss";
-  let job
-  let contents = mainWindow.webContents
-  console.log(contents)
 
   sock.connect("tcp://localhost:" + port)
-
-  // Should log in the terminal
-  console.log('Worker connected to port ' + port)
 
   sock.on('message', function(msg){
     try {
       // deserialize
       let message = JSON.parse(msg)
-      console.log(message)
 
       if (message.eType == "Debug" || message.eType == "Log" || message.eType == "Error") {
         mainWindow.webContents.send('log', message)

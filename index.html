@@ -6,49 +6,11 @@
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
     <body>      
-      <webview id="foo" src="https://www.github.com/" style="display:inline-flex; width:100vw; height:100vh"></webview>             
+      <webview id="foo" src="https://github.com/andrewhart098/electronQC/blob/master/README.md" style="width:100%; height:77vh;"></webview>  
+      <textarea id="console"></textarea>               
     </body>
 
     <script>
-      const moment = require('moment')
-
-      function resetExitedState() {
-        document.body.classList.remove('exited');
-        document.body.classList.remove('crashed');
-        document.body.classList.remove('killed');
-      }
-
-      function navigateTo(url) {
-        resetExitedState();
-        document.querySelector('webview').src = url;
-      }
-
-      function getUrl(job, liveMode = false, holdReady = false) {
-        console.log(job);
-          var hold = holdReady == false ? "0" : "1";
-          var embedPage = liveMode ? "embeddedLive" : "embedded";
-
-          var url = "https://www.quantconnect.com/terminal/{0}?user={1}&token={2}&pid={3}&version={4}&holdReady={5}&bid={6}"
-          var arguments = [embedPage, job.iUserID, job.sChannel, job.iProjectID, "2.2.0.2", hold, job.sAlgorithmID];
-
-          for (var i = 0; i < arguments.length; i++) {       
-              var reg = new RegExp("\\{" + i + "\\}", "gm");             
-              url = url.replace(reg, arguments[i]);
-          }
-
-          console.log(url);
-          return url;
-        }
-
-      
-      require('electron').ipcRenderer
-      .on('log', (event, packet) => {
-        var message =  moment().format('YYYYMMDD HH:mm:ss') + " Trace:: " + packet.sMessage;
-        console.log(message)
-      })
-      .on('backtestNode', (event, packet) => {
-        var url = getUrl(packet)
-        navigateTo(url)
-      })
+      require('./index.js')
     </script>
 </html>
