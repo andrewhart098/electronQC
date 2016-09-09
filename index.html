@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="UTF-8">
     <title>QuantConnect Lean</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-  </head>
-    <body>      
-      <webview id="foo" src="https://github.com/andrewhart098/electronQC/blob/master/README.md" style="width:100%; height:77vh;"></webview>  
-      <textarea id="console"></textarea>               
-    </body>
+    <link rel="stylesheet" type="text/css" href="style/site.css">
+</head>
 
-    <script>
+<body>
+    <div id="webView-holder">
+        <webview id="view" src="https://github.com/andrewhart098/electronQC/blob/master/README.md" style="width:100%; height:77vh;"></webview>
+    </div>
+    
+    <textarea id="console"></textarea>
+</body>
+
+<script>
       require('./index.js')
-    </script>
+</script>
 </html>

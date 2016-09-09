@@ -1,17 +1,12 @@
 const moment = require('moment')
 const $ = require('jquery')
 
-let job
-
-function resetExitedState() {
+function navigateTo(url) {
     document.body.classList.remove('exited');
     document.body.classList.remove('crashed');
     document.body.classList.remove('killed');
-}
 
-function navigateTo(url) {
-    resetExitedState();
-    document.querySelector('webview').src = url;
+    document.getElementById("view").src = url;
 }
 
 function getUrl(job, liveMode = false, holdReady = false) {
@@ -42,7 +37,7 @@ function console_clear() {
 function displayBacktestResultsPacket(packet) {
     if (packet.dProgress != 1) return;
 
-    var url = getUrl(job, false, true);
+    var url = getUrl(packet, false, true);
     var dateFormat = "YYYY-MM-DD HH:mm:ss";
     var final = {};
     var resultData = {};
@@ -62,10 +57,9 @@ function displayBacktestResultsPacket(packet) {
     
     navigateTo(url)
     
-    var webView = document.getElementById("foo")
+    var webView = document.getElementById("view")
     webView.executeJavaScript("window.jnBacktest = $.parseJSON('" + json + "');")
     webView.executeJavaScript("$.holdReady(false)")
-    
 }
 
 require('electron').ipcRenderer
@@ -73,7 +67,6 @@ require('electron').ipcRenderer
         console_log(moment().format('YYYYMMDD HH:mm:ss') + " Trace:: " + packet.sMessage)
     })
     .on('backtestNode', (event, packet) => {
-        job = packet
         console_clear()
         var url = getUrl(packet)
         navigateTo(url)
